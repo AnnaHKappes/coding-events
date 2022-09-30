@@ -3,18 +3,19 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
 
-<h1>All Events</h1>
+<h1>All Tags</h1>
 <header th:replace="fragments :: navigation"></header>
 
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>Event Name</th>
-        </tr>
-    </thead>
-    <tr th:each="event : ${events}">
-        <td><a th:text="${event.name}" th:href="'/events/detail?eventId=' + ${event.id}"></a></td>
+    <tr>
+        <th>Tag Name</th>
     </tr>
+    </thead>
+    <tr th:each="tag : ${tags}">
+        <td th:text="${tag.displayName}"></td>
+    </tr>
+
 </table>
 
 </body>

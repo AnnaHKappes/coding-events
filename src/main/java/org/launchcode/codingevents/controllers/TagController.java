@@ -22,27 +22,27 @@ public class TagController {
     private TagRepository tagRepository;
 
     @GetMapping
-    public String displayAllEvents(Model model){
+    public String displayTags(Model model){
         model.addAttribute("title", "All Tags");
         model.addAttribute("tags", tagRepository.findAll());
         return "tags/index";
     }
 
     @GetMapping("create")
-    public String renderCreateEventCategoryForm(Model model){
+    public String displayCreateTagForm(Model model){
         model.addAttribute("title", "Create Tag");
         model.addAttribute(new Tag());
         return "tags/create";
     }
 
     @PostMapping("create")
-    public String processCreateEventCategoryForm(@Valid @ModelAttribute Tag tag,
+    public String processCreateTagForm(@ModelAttribute @Valid Tag tag,
                                                  Errors errors,
                                                  Model model){
         if(errors.hasErrors()){
             model.addAttribute("title", "Create Tag");
-            model.addAttribute(new EventCategory());
-            return "eventCategories/create";
+            model.addAttribute(tag);
+            return "tags/create";
         }
 
         tagRepository.save(tag);

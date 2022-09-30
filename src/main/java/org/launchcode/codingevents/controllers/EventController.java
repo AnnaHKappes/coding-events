@@ -2,6 +2,7 @@ package org.launchcode.codingevents.controllers;
 
 import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
+import org.launchcode.codingevents.data.TagRepository;
 import org.launchcode.codingevents.models.Event;
 import org.launchcode.codingevents.models.EventCategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class EventController {
 
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @GetMapping
     public String displayEvents(@RequestParam(required = false) Integer categoryId, Model model) {
@@ -82,15 +86,15 @@ public class EventController {
     }
 
     @GetMapping("detail")
-    public String displayEventDetails(@RequestParam(required = false) Integer eventId, Model model) {
+    public String displayEventDetails(@RequestParam Integer eventId, Model model) {
 
         Optional<Event> result = eventRepository.findById(eventId);
         if (result.isEmpty()){
                 model.addAttribute("title", "Invalid Event ID: " + eventId);
         } else {
-                Event event=  result.get();
+                Event event = result.get();
                 model.addAttribute("title", event.getName() + " Details");
-                model.addAttribute("events", event);
+                model.addAttribute("event", event);
         }
 
         return "events/detail";
